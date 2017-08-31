@@ -20,6 +20,16 @@ import  wx #importe le module graphique wx
 import os
 from os.path import *
 
+#Fix unix/windows compatibility
+from sys import platform
+separator='/'
+if platform == "linux" or platform == "linux2":
+    separator='/'
+elif platform == "darwin":
+    separator='/'
+elif platform == "win32":
+    separator='\\'
+
 #Triggers
 mailsent=0
 url_changed=0
@@ -39,9 +49,9 @@ class MyFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE,self.on_close,self)
         
         #Deco
-        ImgDir = (getcwd()+"\\Fond_setup.jpg")
-        fond = wx.Image(ImgDir, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        fond1 = wx.StaticBitmap(self.panel, -1, fond)
+        #ImgDir = (getcwd()+separator+"Fond_setup.jpg")
+        #fond = wx.Image(ImgDir, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        #fond1 = wx.StaticBitmap(self.panel, -1, fond)
 
         #Crée la barre d'état (en bas).
         self.CreerBarreEtat()
@@ -52,63 +62,63 @@ class MyFrame(wx.Frame):
         self.Bind(wx.media.EVT_MEDIA_LOADED,self.button_play,self.player)
 
         #Boutons
-        self.buttonLogFB = wx.Button(fond1,-1,u"Login FaceBook")
+        self.buttonLogFB = wx.Button(self.panel,-1,u"Login FaceBook")
         self.Bind(wx.EVT_BUTTON, self.LogIntoFacebook, self.buttonLogFB)
         
-        self.buttonStartCronCom = wx.Button(fond1,-1,u"Start AutoComment")
+        self.buttonStartCronCom = wx.Button(self.panel,-1,u"Start AutoComment")
         self.Bind(wx.EVT_BUTTON, self.ComEnter, self.buttonStartCronCom)
         
-        self.buttonStopCronCom = wx.Button(fond1,-1,u"Stop AutoComment")
+        self.buttonStopCronCom = wx.Button(self.panel,-1,u"Stop AutoComment")
         self.Bind(wx.EVT_BUTTON, self.StopCronCom, self.buttonStopCronCom)
         #Hack
-        self.buttonCookiechange=wx.Button(fond1,-1,u"Changer Cookie")
+        self.buttonCookiechange=wx.Button(self.panel,-1,u"Changer Cookie")
         self.Bind(wx.EVT_BUTTON, self.ChangeCookie, self.buttonCookiechange)
 
-        self.buttonURLchange=wx.Button(fond1,-1,u"Changer URL")
+        self.buttonURLchange=wx.Button(self.panel,-1,u"Changer URL")
         self.Bind(wx.EVT_BUTTON, self.ChangeURL, self.buttonURLchange)
 
         #Boutons musique
-        self.buttonZik = wx.Button(fond1,-1,u"Play/Pause")
+        self.buttonZik = wx.Button(self.panel,-1,u"Play/Pause")
         self.Bind(wx.EVT_BUTTON, self.button_play, self.buttonZik)
 
-        self.buttonZikStop = wx.Button(fond1
+        self.buttonZikStop = wx.Button(self.panel
                                        ,-1,u"Stop")
         self.Bind(wx.EVT_BUTTON, self.button_stop, self.buttonZikStop)
 
-        self.buttonZikVolM = wx.Button(fond1,-1,u"Vol -")
+        self.buttonZikVolM = wx.Button(self.panel,-1,u"Vol -")
         self.Bind(wx.EVT_BUTTON, self.button_volm, self.buttonZikVolM)
 
-        self.buttonZikVolP = wx.Button(fond1,-1,u"Vol +")
+        self.buttonZikVolP = wx.Button(self.panel,-1,u"Vol +")
         self.Bind(wx.EVT_BUTTON, self.button_volp, self.buttonZikVolP)
 
         #widgets vide
-        self.txtVideCronCom = wx.StaticText(fond1,-1,"")
-        self.txtVideVol = wx.StaticText(fond1,-1,"")
-        self.txtVideProg = wx.StaticText(fond1,-1,"",pos=(170,655))
+        self.txtVideCronCom = wx.StaticText(self.panel,-1,"")
+        self.txtVideVol = wx.StaticText(self.panel,-1,"")
+        self.txtVideProg = wx.StaticText(self.panel,-1,"",pos=(170,655))
         self.txtVideProg.SetFont(wx.Font(18, wx.DEFAULT , wx.NORMAL, wx.NORMAL,False, u"Impact" ));
-        self.txtVideCookie=wx.StaticText(fond1,-1,"")
+        self.txtVideCookie=wx.StaticText(self.panel,-1,"")
         self.txtVideCookie.SetFont(wx.Font(10, wx.DEFAULT , wx.NORMAL, wx.BOLD,False, u"Arial" ))
-        self.txtURLvide = wx.StaticText(fond1,-1,"")
+        self.txtURLvide = wx.StaticText(self.panel,-1,"")
         self.txtURLvide.SetFont(wx.Font(10, wx.DEFAULT , wx.NORMAL, wx.BOLD,False, u"Arial" ))
         self.txtURLvide.SetForegroundColour("sea green")
-        self.txtURLbad = wx.StaticText(fond1,-1,"")
+        self.txtURLbad = wx.StaticText(self.panel,-1,"")
         self.txtURLbad.SetFont(wx.Font(10, wx.DEFAULT , wx.NORMAL, wx.BOLD,False, u"Arial" ))
         self.txtURLbad.SetForegroundColour("FIREBRICK")
 
         #widgets
-        self.gauge = wx.Gauge(fond1,-1, 100, size=(400, 10),pos=(50,635),style=wx.GA_SMOOTH)
+        self.gauge = wx.Gauge(self.panel,-1, 100, size=(400, 10),pos=(50,635),style=wx.GA_SMOOTH)
         self.timer = wx.Timer(self, 1)
-        self.loopbox= wx.CheckBox(fond1,-1,"Repeat ?")
-        self.lsdFX= wx.CheckBox(fond1,-1,"LSD Effect ?")
-        self.txtURL = wx.TextCtrl(fond1,-1,size=(440,20),style=wx.TE_PROCESS_ENTER)
+        self.loopbox= wx.CheckBox(self.panel,-1,"Repeat ?")
+        self.lsdFX= wx.CheckBox(self.panel,-1,"LSD Effect ?")
+        self.txtURL = wx.TextCtrl(self.panel,-1,size=(440,20),style=wx.TE_PROCESS_ENTER)
         self.txtURL.SetHint(u"Copiez URL ici...")
         self.Bind(wx.EVT_TEXT_ENTER,self.URLcomplete,self.txtURL)
-        self.txtLoginFB = wx.StaticText(fond1,-1,"FB Login : NOT LOGGED IN")
+        self.txtLoginFB = wx.StaticText(self.panel,-1,"FB Login : NOT LOGGED IN")
         self.txtLoginFB.SetFont(wx.Font(10, wx.DEFAULT , wx.NORMAL, wx.NORMAL,False, u"Impact" ))
         self.txtLoginFB.SetForegroundColour("FIREBRICK")
     
         #Hack
-        self.txtCookie_enter = wx.TextCtrl(fond1,-1,size=(140,40),style=wx.TE_PROCESS_ENTER|wx.TE_MULTILINE)
+        self.txtCookie_enter = wx.TextCtrl(self.panel,-1,size=(140,40),style=wx.TE_PROCESS_ENTER|wx.TE_MULTILINE)
         self.Bind(wx.EVT_TEXT_ENTER,self.cookie_enter,self.txtCookie_enter)
         
         #Sizer
