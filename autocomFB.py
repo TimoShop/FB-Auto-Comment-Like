@@ -20,6 +20,16 @@ import  wx #importe le module graphique wx
 import os
 from os.path import *
 
+#Fix unix/windows compatibility
+from sys import platform
+separator='/'
+if platform == "linux" or platform == "linux2":
+    separator='/'
+elif platform == "darwin":
+    separator='/'
+elif platform == "win32":
+    separator='\\'
+
 #Triggers
 mailsent=0
 url_changed=0
@@ -39,7 +49,7 @@ class MyFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE,self.on_close,self)
         
         #Deco
-        ImgDir = (getcwd()+"\\Fond_setup.jpg")
+        ImgDir = (getcwd()+separator+"Fond_setup.jpg")
         fond = wx.Image(ImgDir, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         fond1 = wx.StaticBitmap(self.panel, -1, fond)
 
