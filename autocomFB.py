@@ -1,4 +1,4 @@
-# -*- coding: cp1252 -*-
+# -*- coding: cp1300 -*-
 from time import gmtime, strftime
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
@@ -43,7 +43,7 @@ class MyFrame(wx.Frame):
         fond = wx.Image(ImgDir, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         fond1 = wx.StaticBitmap(self.panel, -1, fond)
 
-        #Crée la barre d'état (en bas).
+        #CrÃ©e la barre d'Ã©tat (en bas).
         self.CreerBarreEtat()
 
         #Musique Player
@@ -148,7 +148,7 @@ class MyFrame(wx.Frame):
         bsizer1.Add(sizerH1, 1, wx.EXPAND, 0)
 
         #URL
-        box3 = wx.StaticBox(self.panel, -1, u"URL du post à commenter :")
+        box3 = wx.StaticBox(self.panel, -1, u"URL du post Ã  commenter :")
         bsizer3 = wx.StaticBoxSizer(box3, wx.HORIZONTAL)
         sizerH3 = wx.BoxSizer(wx.VERTICAL)
         sizerH3.Add(gbox3, 0, wx.ALL|wx.CENTER, 10)
@@ -169,7 +169,7 @@ class MyFrame(wx.Frame):
         mainSizer.Add(bsizer2, 0,wx.ALL|wx.EXPAND, 10)
         self.SetSizer(mainSizer)
 
-        #On desactive certains boutons au départ
+        #On desactive certains boutons au dÃ©part
         self.buttonStopCronCom.Disable()
         self.buttonStartCronCom.Disable()
 
@@ -301,7 +301,7 @@ class MyFrame(wx.Frame):
         self.player.SetVolume(volumem)
         vol=int(volume*100-25)
         if vol>0:
-            self.txtVideVol.SetLabel(u"Volume à : "+str(vol)+" %")
+            self.txtVideVol.SetLabel(u"Volume Ã  : "+str(vol)+" %")
         else:
             self.txtVideVol.SetLabel(u"Volume au MIN")
         evt.Skip()
@@ -312,7 +312,7 @@ class MyFrame(wx.Frame):
         self.player.SetVolume(volumep)
         vol=int(volume*100+25)
         if vol<100:
-            self.txtVideVol.SetLabel(u"Volume à : "+str(vol)+" %")
+            self.txtVideVol.SetLabel(u"Volume Ã  : "+str(vol)+" %")
         else:
             self.txtVideVol.SetLabel(u"Volume au MAX")
         evt.Skip()
@@ -444,7 +444,7 @@ class MyFrame(wx.Frame):
                 url_changed=0
             else:
                 pass
-            #Like non appuyé
+            #Like non appuyÃ©
 ##            try:
 ##                elem_like=driver.find_element_by_xpath("//a[@aria-pressed]")
 ##                for a in elem_like:
@@ -463,7 +463,7 @@ class MyFrame(wx.Frame):
 ##                print "Didn't get form ;("
 ##            #2-On trouve les divs de commentaire
 ##            try:
-##                elem_div=elem_form.find_elements_by_xpath(".//div[@class='UFIReplyActorPhotoWrapper img _8o _8r UFIImageBlockImage']")#champ de saisie caché
+##                elem_div=elem_form.find_elements_by_xpath(".//div[@class='UFIReplyActorPhotoWrapper img _8o _8r UFIImageBlockImage']")#champ de saisie cachÃ©
 ##                elem_div_cible=elem_div[-1]#On cible la derniere
 ##                print "Got div :)"
 ##            except:
@@ -481,7 +481,7 @@ class MyFrame(wx.Frame):
 
             ###ON CONTOURNE LE PROBLEME EN PASSANT PAR LA VERSION MOBILE###PAS TRES PROPRE MAIS CA MARCHE
 
-            #On scroll down pour avoir accès au control
+            #On scroll down pour avoir accÃ¨s au control
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             #Message
             message=str(randrange(99999999))+" ICI <= TEST BOT SELENIUM 3:) Merci FB :poop: "+str(randrange(99999999))
@@ -489,7 +489,7 @@ class MyFrame(wx.Frame):
             #1-On focus l'input
             try:
                 elem_input=driver.find_element_by_xpath("//input[@id='composerInput']")
-            #2-On écrit le message
+            #2-On Ã©crit le message
                 elem_input.send_keys(message)
             #3-On chope le bouton de submit
                 elem_submit=driver.find_element_by_xpath("//input[@type='submit']")
@@ -502,7 +502,7 @@ class MyFrame(wx.Frame):
         evt.Skip()
 
     def erreur_msg(self):
-        dlg = wx.MessageDialog(self,u"Une erreur s'est produite !\nRéessayez ^^","Erreur Inconnue",\
+        dlg = wx.MessageDialog(self,u"Une erreur s'est produite !\nRÃ©essayez ^^","Erreur Inconnue",\
         style=wx.ICON_ERROR|wx.STAY_ON_TOP|wx.CENTER|wx.OK) #Definit les attributs de la fenetre de message.
         dlg.ShowModal()
     
@@ -525,12 +525,12 @@ class MyFrame(wx.Frame):
         m.close()
 
     def erreurConnexion(self):
-        dlg = wx.MessageDialog(self,u"Erreur 404-Page Innaccessible...\nVérifiez votre connexion internet !","Erreur 404",\
+        dlg = wx.MessageDialog(self,u"Erreur 404-Page Innaccessible...\nVÃ©rifiez votre connexion internet !","Erreur 404",\
         style=wx.ICON_ERROR|wx.STAY_ON_TOP|wx.CENTER|wx.OK) #Definit les attributs de la fenetre de message.
         dlg.ShowModal()
 
     def msgLogin(self):
-        dlg = wx.MessageDialog(self,u"Vous devez vous connecter à Facebook !\n Recliquez ce bouton après vous être loggué merci !","Connexion SVP !",\
+        dlg = wx.MessageDialog(self,u"Vous devez vous connecter Ã  Facebook !\n Recliquez ce bouton aprÃ¨s vous Ãªtre logguÃ© merci !","Connexion SVP !",\
         style=wx.ICON_INFORMATION|wx.STAY_ON_TOP|wx.CENTER|wx.OK) #Definit les attributs de la fenetre de message.
         dlg.ShowModal()
         
